@@ -1,11 +1,11 @@
 {
-  "name": "react-bootstrap-table",
-  "version": "2.1.3",
-  "description": "It's a react table for bootstrap",
+  "name": "react-bootstrap-table-extra-panels",
+  "version": "2.1.5",
+  "description": "It's a react table for bootstrap. Now with extra panels betwen rows.",
   "main": "./dist/react-bootstrap-table.min.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AllenFang/react-bootstrap-table.git"
+    "url": "git+https://github.com/pvoznyuk/react-bootstrap-table.git"
   },
   "scripts": {
     "lint": "eslint src",
@@ -27,7 +27,7 @@
   "tags": [
     "react"
   ],
-  "author": "AllenFang",
+  "author": "pvoznyuk",
   "license": "MIT",
   "devDependencies": {
     "babel": "^5.8.29",
@@ -76,5 +76,12 @@
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react"
     ]
+  },
+  "bugs": {
+    "url": "https://github.com/pvoznyuk/react-bootstrap-table/issues"
+  },
+  "homepage": "https://github.com/pvoznyuk/react-bootstrap-table#readme",
+  "directories": {
+    "example": "examples"
   }
 }

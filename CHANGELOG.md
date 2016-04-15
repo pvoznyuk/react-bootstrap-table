@@ -1,3 +1,8 @@
+<a name="v2.1.4"></a>
+# [v2.1.4](https://github.com/pvoznyuk/react-bootstrap-table-/compare/v2.1.3...v2.1.4) (2016-04-16)
+### Features
+* Support panels between rows
+
 <a name="v2.1.3"></a>
 # [v2.1.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.1.2...v2.1.3) (2016-04-11)
 ### Features
