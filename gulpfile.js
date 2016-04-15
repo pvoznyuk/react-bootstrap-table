@@ -76,7 +76,7 @@ gulp.task('example-server', function() {
       console.log(err);
     }
 
-    console.log('Listening at localhost:3004');
+    console.log('Listening at localhost:3054');
   });
 
 });

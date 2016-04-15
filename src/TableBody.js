@@ -4,6 +4,7 @@ import TableRow from './TableRow';
 import TableColumn from './TableColumn';
 import TableEditColumn from './TableEditColumn';
 import classSet from 'classnames';
+import ExtraPanel from './ExtraPanel';
 
 const isFun = function(obj) {
   return obj && (typeof obj === 'function');
@@ -101,6 +102,25 @@ class TableBody extends Component {
       if (isFun(this.props.trClassName)) {
         trClassName = this.props.trClassName(data, r);
       }
+
+      let extraPanel = null;
+
+      function checkCondition(data1, conditions) {
+        if (data1.id === conditions.id) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+
+      if (this.props.extraPanel && checkCondition(this.props.data[r], this.props.extraPanelRow) ) {
+        extraPanel = (
+          <ExtraPanel>
+            { this.props.extraPanel }
+          </ExtraPanel>
+        );
+      }
+
       return (
         <TableRow isSelected={ selected } key={ r } className={ trClassName }
           selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
@@ -111,6 +131,7 @@ class TableBody extends Component {
           onSelectRow={ this.handleSelectRow }>
           { selectRowColumn }
           { tableColumns }
+          { extraPanel }
         </TableRow>
       );
     }, this);

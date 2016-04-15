@@ -66,7 +66,9 @@ class TableRow extends Component {
       );
     } else {
       return (
-        <tr { ...trCss }>{ this.props.children }</tr>
+        <tr { ...trCss }>
+          { this.props.children }
+        </tr>
       );
     }
   }

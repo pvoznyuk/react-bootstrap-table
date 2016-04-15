@@ -263,6 +263,8 @@ class BootstrapTable extends Component {
             onRowMouseOver={ this.handleRowMouseOver }
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
+            extraPanel={ this.props.extraPanel }
+            extraPanelRow={ this.props.extraPanelRow }
             noDataText={ this.props.options.noDataText } />
         </div>
         { tableFilter }

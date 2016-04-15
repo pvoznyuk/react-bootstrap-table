@@ -6,7 +6,7 @@ var webpack = require('webpack');
 module.exports = {
   entry: {
     app: './examples/js/app.js',
-    vendors: ['webpack-dev-server/client?http://localhost:3004', 'webpack/hot/only-dev-server']
+    vendors: ['webpack-dev-server/client?http://localhost:3054', 'webpack/hot/only-dev-server']
   },
   debug: true,
   devtool: 'eval-source-map',
@@ -15,7 +15,7 @@ module.exports = {
     filename: '[name].bundle.js'
   },
   serverConfig: {
-    port: '3004',// server port
+    port: '3054',// server port
     publicPath: '/',// js path
     contentBase: 'examples/'//web root path
   },

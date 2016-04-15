@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { ToastContainer, ToastMessage } from 'react-toastr';
 
-
 const ToastrMessageFactory = React.createFactory(ToastMessage.animation);
 
 class Notification extends Component {
