@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table-extra-panels",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "It's a react table for bootstrap. Now with extra panels betwen rows.",
   "main": "./dist/react-bootstrap-table.min.js",
   "repository": {
