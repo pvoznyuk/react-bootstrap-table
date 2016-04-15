@@ -5,6 +5,12 @@ It's a fork of [react-bootstrap-table](https://github.com/AllenFang/react-bootst
 
 Explore an example on [examples](https://github.com/pvoznyuk/react-bootstrap-table/tree/master/examples/js) folder</br>
 
+## Usage
+### a.Install
+```bash
+npm install react-bootstrap-table-extra-panels --save
+```
+
 ### Quick Demo
 ```js
 const products = [];
