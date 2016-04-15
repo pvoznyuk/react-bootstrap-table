@@ -72,6 +72,9 @@ class App extends React.Component {
     }, {
       text: 'A complex demo',
       href: 'complex'
+    }, {
+      text: 'Extra panel between rows',
+      href: 'extra-panel'
     } ];
 
     const exampleMenuItems = examples.map((item, idx) => {

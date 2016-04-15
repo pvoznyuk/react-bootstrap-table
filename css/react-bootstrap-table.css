@@ -235,3 +235,8 @@
 .bounceOut {
   animation-name: bounceOut;
 }
+
+.react-bs-table-extra-content {
+  width: 100%;
+  padding: 20px;
+}

@@ -105,17 +105,23 @@ class TableBody extends Component {
 
       let extraPanel = null;
 
-      function checkCondition(data1, conditions) {
-        if (data1.id === conditions.id) {
+      function checkCondition(rowData, conditions) {
+        if (rowData && conditions) {
+          for (const key in conditions) {
+            if (conditions.hasOwnProperty(key)) {
+              if (conditions[key] !== rowData[key]) {
+                return false;
+              }
+            }
+          }
           return true;
-        } else {
-          return false;
         }
+        return false;
       }
 
       if (this.props.extraPanel && checkCondition(this.props.data[r], this.props.extraPanelRow) ) {
         extraPanel = (
-          <ExtraPanel>
+          <ExtraPanel colSpan={ this.props.columns.length }>
             { this.props.extraPanel }
           </ExtraPanel>
         );

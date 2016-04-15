@@ -5,7 +5,6 @@ import HoverStripedTable from './hover-striped-table';
 import BorderlessTable from './borderless-table';
 import ScrollTable from './scroll-table';
 import LargeColumnTable from './large-column-table';
-import ExtendedTable from './extended-table';
 
 import renderLinks from '../utils';
 
@@ -15,9 +14,6 @@ class Demo extends React.Component {
   render() {
     return (
       <Col md={ 8 } mdOffset={ 1 }>
-        <Panel header={ 'react-bootstrap-table with extra content' }>
-          <ExtendedTable/>
-        </Panel>
         <Panel header={ 'A basic react-bootstrap-table' }>
           { renderLinks('basic/basic-table.js') }
           <BasicTable/>

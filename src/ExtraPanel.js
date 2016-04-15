@@ -9,7 +9,7 @@ class ExtraPanel extends Component {
   render() {
     return (
       <tr className='react-bs-table-extra-content-wrapper'>
-        <td colSpan='3' className='react-bs-table-extra-content-cell'>
+        <td colSpan={ this.props.colSpan } className='react-bs-table-extra-content-cell'>
           <div className='react-bs-table-extra-content'>
             { this.props.children }
           </div>

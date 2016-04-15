@@ -17,17 +17,26 @@ function addProducts(quantity) {
   }
 }
 
-addProducts(10);
-
-const condition = { id: 2 };
-const extraPanelContent = (
-  <p>Some content</p>
-);
+addProducts(5);
 
 export default class ExtendedTable extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      condition: { id: 2 },
+      extraPanelContent: (
+        <div>
+          <p>Some content.</p>
+        </div>
+      )
+    };
+  }
+
   render() {
     return (
-      <BootstrapTable data={ products } extraPanel={ extraPanelContent } extraPanelRow={ condition } >
+      <BootstrapTable data={ products } extraPanel={ this.state.extraPanelContent } extraPanelRow={ this.state.condition } >
         <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
         <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
