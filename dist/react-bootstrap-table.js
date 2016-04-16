@@ -684,6 +684,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onRowMouseOver: this.handleRowMouseOver,
 	            onRowMouseOut: this.handleRowMouseOut,
 	            onSelectRow: this.handleSelectRow,
+	            extraPanel: this.props.extraPanel,
+	            extraPanelRow: this.props.extraPanelRow,
 	            noDataText: this.props.options.noDataText })
 	        ),
 	        tableFilter,
@@ -1465,6 +1467,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
+	var _ExtraPanel = __webpack_require__(28);
+
+	var _ExtraPanel2 = _interopRequireDefault(_ExtraPanel);
+
 	var isFun = function isFun(obj) {
 	  return obj && typeof obj === 'function';
 	};
@@ -1636,6 +1642,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (isFun(this.props.trClassName)) {
 	          trClassName = this.props.trClassName(data, r);
 	        }
+
+	        var extraPanel = null;
+
+	        function checkCondition(rowData, conditions) {
+	          if (rowData && conditions) {
+	            for (var key in conditions) {
+	              if (conditions.hasOwnProperty(key)) {
+	                if (conditions[key] !== rowData[key]) {
+	                  return false;
+	                }
+	              }
+	            }
+	            return true;
+	          }
+	          return false;
+	        }
+
+	        if (this.props.extraPanel && checkCondition(this.props.data[r], this.props.extraPanelRow)) {
+	          extraPanel = _react2['default'].createElement(
+	            _ExtraPanel2['default'],
+	            { colSpan: this.props.columns.length },
+	            this.props.extraPanel
+	          );
+	        }
+
 	        return _react2['default'].createElement(
 	          _TableRow2['default'],
 	          { isSelected: selected, key: r, className: trClassName,
@@ -1646,7 +1677,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onRowMouseOut: this.handleRowMouseOut,
 	            onSelectRow: this.handleSelectRow },
 	          selectRowColumn,
-	          tableColumns
+	          tableColumns,
+	          extraPanel
 	        );
 	      }, this);
 
@@ -2483,22 +2515,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	    }
 	  }, {
-	    key: "render",
-	    value: function render() {
-	      var _this3 = this;
-
-	      return _react2.default.createElement(
-	        "div",
-	        _extends({}, this.props, { "aria-live": "polite", role: "alert" }),
-	        this.state.toasts.map(function (toast) {
-	          return _this3.props.toastMessageFactory(toast);
-	        })
-	      );
-	    }
-	  }, {
 	    key: "_notify",
 	    value: function _notify(type, message, title) {
-	      var _this4 = this;
+	      var _this3 = this;
 
 	      var optionsOverride = arguments.length <= 3 || arguments[3] === undefined ? {} : arguments[3];
 
@@ -2521,7 +2540,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if ("function" === typeof optionsOverride.handleOnClick) {
 	              optionsOverride.handleOnClick();
 	            }
-	            return _this4._handle_toast_on_click(e);
+	            return _this3._handle_toast_on_click(e);
 	          },
 	          handleRemove: this._handle_toast_remove.bind(this)
 	        }
@@ -2547,24 +2566,50 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "_handle_toast_remove",
 	    value: function _handle_toast_remove(toastId) {
-	      var _this5 = this;
+	      var _this4 = this;
 
 	      var operationName = "" + (this.props.newestOnTop ? "reduceRight" : "reduce");
 	      this.state.toasts[operationName](function (found, toast, index) {
 	        if (found || toast.toastId !== toastId) {
 	          return false;
 	        }
-	        _this5.setState((0, _reactAddonsUpdate2.default)(_this5.state, {
+	        _this4.setState((0, _reactAddonsUpdate2.default)(_this4.state, {
 	          toasts: { $splice: [[index, 1]] }
 	        }));
 	        return true;
 	      }, false);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this5 = this;
+
+	      return _react2.default.createElement(
+	        "div",
+	        _extends({}, this.props, { "aria-live": "polite", role: "alert" }),
+	        this.state.toasts.map(function (toast) {
+	          return _this5.props.toastMessageFactory(toast);
+	        })
+	      );
 	    }
 	  }]);
 
 	  return ToastContainer;
 	}(_react.Component);
 
+	ToastContainer.propTypes = {
+	  toastType: _react.PropTypes.shape({
+	    error: _react.PropTypes.string,
+	    info: _react.PropTypes.string,
+	    success: _react.PropTypes.string,
+	    warning: _react.PropTypes.string
+	  }).isRequired,
+	  id: _react.PropTypes.string.isRequired,
+	  toastMessageFactory: _react.PropTypes.func.isRequired,
+	  preventDuplicates: _react.PropTypes.bool.isRequired,
+	  newestOnTop: _react.PropTypes.bool.isRequired,
+	  onClick: _react.PropTypes.func.isRequired
+	};
 	ToastContainer.defaultProps = {
 	  toastType: {
 	    error: "error",
@@ -2971,7 +3016,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _animationMixin2 = _interopRequireDefault(_animationMixin);
 
-	var _jQueryMixin = __webpack_require__(28);
+	var _jQueryMixin = __webpack_require__(27);
 
 	var _jQueryMixin2 = _interopRequireDefault(_jQueryMixin);
 
@@ -3086,17 +3131,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	var _CSSCore = __webpack_require__(24);
-
-	var _CSSCore2 = _interopRequireDefault(_CSSCore);
-
-	var _ReactTransitionEvents = __webpack_require__(26);
+	var _ReactTransitionEvents = __webpack_require__(24);
 
 	var _ReactTransitionEvents2 = _interopRequireDefault(_ReactTransitionEvents);
 
 	var _reactDom = __webpack_require__(5);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _elementClass = __webpack_require__(26);
+
+	var _elementClass2 = _interopRequireDefault(_elementClass);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3154,15 +3199,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return;
 	      }
 
-	      _CSSCore2.default.removeClass(node, className);
-	      _CSSCore2.default.removeClass(node, activeClassName);
+	      var classList = (0, _elementClass2.default)(node);
+	      classList.remove(className);
+	      classList.remove(activeClassName);
 
 	      _ReactTransitionEvents2.default.removeEndEventListener(node, endListener);
 	    };
 
 	    _ReactTransitionEvents2.default.addEndEventListener(node, endListener);
 
-	    _CSSCore2.default.addClass(node, className);
+	    (0, _elementClass2.default)(node).add(className);
 
 	    // Need to do this to actually trigger a transition.
 	    this._queue_class(activeClassName);
@@ -3173,8 +3219,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var className = this.props.transition + "-" + animationType;
 	    var activeClassName = className + "-active";
 
-	    _CSSCore2.default.removeClass(node, className);
-	    _CSSCore2.default.removeClass(node, activeClassName);
+	    var classList = (0, _elementClass2.default)(node);
+	    classList.remove(className);
+	    classList.remove(activeClassName);
 	  },
 	  _set_animation: function _set_animation(hide) {
 	    var node = _reactDom2.default.findDOMNode(this);
@@ -3185,7 +3232,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      animations.forEach(function (anim) {
-	        _CSSCore2.default.removeClass(node, anim);
+	        return (0, _elementClass2.default)(node).remove(anim);
 	      });
 
 	      _ReactTransitionEvents2.default.removeEndEventListener(node, endListener);
@@ -3194,7 +3241,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _ReactTransitionEvents2.default.addEndEventListener(node, endListener);
 
 	    animations.forEach(function (anim) {
-	      _CSSCore2.default.addClass(node, anim);
+	      return (0, _elementClass2.default)(node).add(anim);
 	    });
 	  },
 	  _get_animation_classes: function _get_animation_classes(hide) {
@@ -3206,11 +3253,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 	  _clear_animation: function _clear_animation(hide) {
-	    var _this2 = this;
-
+	    var node = _reactDom2.default.findDOMNode(this);
 	    var animations = this._get_animation_classes(hide);
 	    animations.forEach(function (animation) {
-	      _CSSCore2.default.removeClass(_reactDom2.default.findDOMNode(_this2), animation);
+	      return (0, _elementClass2.default)(node).remove(animation);
 	    });
 	  },
 	  _queue_class: function _queue_class(className) {
@@ -3221,8 +3267,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 	  _flush_class_name_queue: function _flush_class_name_queue() {
+	    var _this2 = this;
+
 	    if (this._is_mounted) {
-	      this.classNameQueue.forEach(_CSSCore2.default.addClass.bind(_CSSCore2.default, _reactDom2.default.findDOMNode(this)));
+	      (function () {
+	        var node = _reactDom2.default.findDOMNode(_this2);
+	        _this2.classNameQueue.forEach(function (className) {
+	          return (0, _elementClass2.default)(node).add(className);
+	        });
+	      })();
 	    }
 	    this.classNameQueue.length = 0;
 	    this.timeout = null;
@@ -3278,165 +3331,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule CSSCore
-	 * @typechecks
-	 */
-
-	'use strict';
-
-	var invariant = __webpack_require__(25);
-
-	/**
-	 * The CSSCore module specifies the API (and implements most of the methods)
-	 * that should be used when dealing with the display of elements (via their
-	 * CSS classes and visibility on screen. It is an API focused on mutating the
-	 * display and not reading it as no logical state should be encoded in the
-	 * display of elements.
-	 */
-
-	var CSSCore = {
-
-	  /**
-	   * Adds the class passed in to the element if it doesn't already have it.
-	   *
-	   * @param {DOMElement} element the element to set the class on
-	   * @param {string} className the CSS className
-	   * @return {DOMElement} the element passed in
-	   */
-	  addClass: function (element, className) {
-	    !!/\s/.test(className) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'CSSCore.addClass takes only a single class name. "%s" contains ' + 'multiple classes.', className) : invariant(false) : undefined;
-
-	    if (className) {
-	      if (element.classList) {
-	        element.classList.add(className);
-	      } else if (!CSSCore.hasClass(element, className)) {
-	        element.className = element.className + ' ' + className;
-	      }
-	    }
-	    return element;
-	  },
-
-	  /**
-	   * Removes the class passed in from the element
-	   *
-	   * @param {DOMElement} element the element to set the class on
-	   * @param {string} className the CSS className
-	   * @return {DOMElement} the element passed in
-	   */
-	  removeClass: function (element, className) {
-	    !!/\s/.test(className) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'CSSCore.removeClass takes only a single class name. "%s" contains ' + 'multiple classes.', className) : invariant(false) : undefined;
-
-	    if (className) {
-	      if (element.classList) {
-	        element.classList.remove(className);
-	      } else if (CSSCore.hasClass(element, className)) {
-	        element.className = element.className.replace(new RegExp('(^|\\s)' + className + '(?:\\s|$)', 'g'), '$1').replace(/\s+/g, ' ') // multiple spaces to one
-	        .replace(/^\s*|\s*$/g, ''); // trim the ends
-	      }
-	    }
-	    return element;
-	  },
-
-	  /**
-	   * Helper to add or remove a class from an element based on a condition.
-	   *
-	   * @param {DOMElement} element the element to set the class on
-	   * @param {string} className the CSS className
-	   * @param {*} bool condition to whether to add or remove the class
-	   * @return {DOMElement} the element passed in
-	   */
-	  conditionClass: function (element, className, bool) {
-	    return (bool ? CSSCore.addClass : CSSCore.removeClass)(element, className);
-	  },
-
-	  /**
-	   * Tests whether the element has the class specified.
-	   *
-	   * @param {DOMNode|DOMWindow} element the element to set the class on
-	   * @param {string} className the CSS className
-	   * @return {boolean} true if the element has the class, false if not
-	   */
-	  hasClass: function (element, className) {
-	    !!/\s/.test(className) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'CSS.hasClass takes only a single class name.') : invariant(false) : undefined;
-	    if (element.classList) {
-	      return !!className && element.classList.contains(className);
-	    }
-	    return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
-	  }
-
-	};
-
-	module.exports = CSSCore;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule invariant
-	 */
-
-	'use strict';
-
-	/**
-	 * Use invariant() to assert state which your program assumes to be true.
-	 *
-	 * Provide sprintf-style format (only %s is supported) and arguments
-	 * to provide information about what broke and what you were
-	 * expecting.
-	 *
-	 * The invariant message will be stripped in production, but the invariant
-	 * will remain to ensure logic does not differ in production.
-	 */
-
-	function invariant(condition, format, a, b, c, d, e, f) {
-	  if (process.env.NODE_ENV !== 'production') {
-	    if (format === undefined) {
-	      throw new Error('invariant requires an error message argument');
-	    }
-	  }
-
-	  if (!condition) {
-	    var error;
-	    if (format === undefined) {
-	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-	    } else {
-	      var args = [a, b, c, d, e, f];
-	      var argIndex = 0;
-	      error = new Error(format.replace(/%s/g, function () {
-	        return args[argIndex++];
-	      }));
-	      error.name = 'Invariant Violation';
-	    }
-
-	    error.framesToPop = 1; // we don't care about invariant's own frame
-	    throw error;
-	  }
-	}
-
-	module.exports = invariant;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
-
-/***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
 	 * All rights reserved.
@@ -3450,7 +3344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(27);
+	var ExecutionEnvironment = __webpack_require__(25);
 
 	/**
 	 * EVENT_NAME_MAP is used to determine which event fired when a
@@ -3548,7 +3442,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactTransitionEvents;
 
 /***/ },
-/* 27 */
+/* 25 */
 /***/ function(module, exports) {
 
 	/**
@@ -3589,7 +3483,72 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ExecutionEnvironment;
 
 /***/ },
-/* 28 */
+/* 26 */
+/***/ function(module, exports) {
+
+	module.exports = function(opts) {
+	  return new ElementClass(opts)
+	}
+
+	function indexOf(arr, prop) {
+	  if (arr.indexOf) return arr.indexOf(prop)
+	  for (var i = 0, len = arr.length; i < len; i++)
+	    if (arr[i] === prop) return i
+	  return -1
+	}
+
+	function ElementClass(opts) {
+	  if (!(this instanceof ElementClass)) return new ElementClass(opts)
+	  var self = this
+	  if (!opts) opts = {}
+
+	  // similar doing instanceof HTMLElement but works in IE8
+	  if (opts.nodeType) opts = {el: opts}
+
+	  this.opts = opts
+	  this.el = opts.el || document.body
+	  if (typeof this.el !== 'object') this.el = document.querySelector(this.el)
+	}
+
+	ElementClass.prototype.add = function(className) {
+	  var el = this.el
+	  if (!el) return
+	  if (el.className === "") return el.className = className
+	  var classes = el.className.split(' ')
+	  if (indexOf(classes, className) > -1) return classes
+	  classes.push(className)
+	  el.className = classes.join(' ')
+	  return classes
+	}
+
+	ElementClass.prototype.remove = function(className) {
+	  var el = this.el
+	  if (!el) return
+	  if (el.className === "") return
+	  var classes = el.className.split(' ')
+	  var idx = indexOf(classes, className)
+	  if (idx > -1) classes.splice(idx, 1)
+	  el.className = classes.join(' ')
+	  return classes
+	}
+
+	ElementClass.prototype.has = function(className) {
+	  var el = this.el
+	  if (!el) return
+	  var classes = el.className.split(' ')
+	  return indexOf(classes, className) > -1
+	}
+
+	ElementClass.prototype.toggle = function(className) {
+	  var el = this.el
+	  if (!el) return
+	  if (this.has(className)) this.remove(className)
+	  else this.add(className)
+	}
+
+
+/***/ },
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3680,6 +3639,68 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	  }
 	};
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var ExtraPanel = (function (_Component) {
+	  _inherits(ExtraPanel, _Component);
+
+	  function ExtraPanel(props) {
+	    _classCallCheck(this, ExtraPanel);
+
+	    _get(Object.getPrototypeOf(ExtraPanel.prototype), 'constructor', this).call(this, props);
+	  }
+
+	  _createClass(ExtraPanel, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'tr',
+	        { className: 'react-bs-table-extra-content-wrapper' },
+	        _react2['default'].createElement(
+	          'td',
+	          { colSpan: this.props.colSpan, className: 'react-bs-table-extra-content-cell' },
+	          _react2['default'].createElement(
+	            'div',
+	            { className: 'react-bs-table-extra-content' },
+	            this.props.children
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ExtraPanel;
+	})(_react.Component);
+
+	ExtraPanel.defaultProps = {
+	  name: 'extraPanel'
+	};
+
+	exports['default'] = ExtraPanel;
+	module.exports = exports['default'];
 
 /***/ },
 /* 29 */
@@ -5825,11 +5846,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        break;
 	      // slower
 	      default:
-	        args = Array.prototype.slice.call(arguments, 1);
+	        len = arguments.length;
+	        args = new Array(len - 1);
+	        for (i = 1; i < len; i++)
+	          args[i - 1] = arguments[i];
 	        handler.apply(this, args);
 	    }
 	  } else if (isObject(handler)) {
-	    args = Array.prototype.slice.call(arguments, 1);
+	    len = arguments.length;
+	    args = new Array(len - 1);
+	    for (i = 1; i < len; i++)
+	      args[i - 1] = arguments[i];
+
 	    listeners = handler.slice();
 	    len = listeners.length;
 	    for (i = 0; i < len; i++)
@@ -5867,6 +5895,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  // Check for listener leak
 	  if (isObject(this._events[type]) && !this._events[type].warned) {
+	    var m;
 	    if (!isUndefined(this._maxListeners)) {
 	      m = this._maxListeners;
 	    } else {
@@ -5988,7 +6017,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  if (isFunction(listeners)) {
 	    this.removeListener(type, listeners);
-	  } else if (listeners) {
+	  } else {
 	    // LIFO order
 	    while (listeners.length)
 	      this.removeListener(type, listeners[listeners.length - 1]);
@@ -6009,20 +6038,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return ret;
 	};
 
-	EventEmitter.prototype.listenerCount = function(type) {
-	  if (this._events) {
-	    var evlistener = this._events[type];
-
-	    if (isFunction(evlistener))
-	      return 1;
-	    else if (evlistener)
-	      return evlistener.length;
-	  }
-	  return 0;
-	};
-
 	EventEmitter.listenerCount = function(emitter, type) {
-	  return emitter.listenerCount(type);
+	  var ret;
+	  if (!emitter._events || !emitter._events[type])
+	    ret = 0;
+	  else if (isFunction(emitter._events[type]))
+	    ret = 1;
+	  else
+	    ret = emitter._events[type].length;
+	  return ret;
 	};
 
 	function isFunction(arg) {
